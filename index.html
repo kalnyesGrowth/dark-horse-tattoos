@@ -146,11 +146,8 @@ ul{list-style:none}
 
 /* HERO */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('hero-poster.jpg') center/cover no-repeat}
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;opacity:0;transition:opacity .3s ease}
-.hero-video::-webkit-media-controls{display:none!important;-webkit-appearance:none}
-.hero-video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none;opacity:0;pointer-events:none;position:absolute;top:-9999px}
-.hero-video::-webkit-media-controls-panel{display:none!important;-webkit-appearance:none}
-.hero-video::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;opacity:0}
+.hero-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.hero-video-src{position:absolute;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;z-index:-1}
 .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.5) 0%,rgba(10,10,10,.3) 40%,rgba(10,10,10,.8) 100%);z-index:1}
 .hero-content{position:relative;z-index:2;max-width:800px;padding:0 24px}
 .hero-badge{display:inline-block;padding:6px 18px;background:var(--crimson-dim);border:none;border-radius:50px;font-size:var(--text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);margin-bottom:24px}
@@ -372,7 +369,6 @@ ul{list-style:none}
   .nav-links,.nav-cta.desktop{display:none}
   .hamburger{display:block}
   .nav-logo-img{height:32px}
-  .hero-video{object-position:center}
   .hero-logo{max-width:300px}
   .about-grid{grid-template-columns:1fr;gap:40px}
   .about-img{order:-1}
@@ -445,9 +441,7 @@ ul{list-style:none}
 <main>
 <!-- HERO -->
 <section class="hero" id="hero">
-  <video class="hero-video" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture preload="auto" aria-hidden="true">
-    <source src="hero-bg.mp4" type="video/mp4">
-  </video>
+  <canvas class="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-content">
     <span class="hero-badge">Est. 2008 | Voted Stafford's Best</span>
     <h1><img src="logo.svg" alt="Dark Horse Tattoo Parlor" class="hero-logo"></h1>
@@ -1064,50 +1058,102 @@ if (timelineFill && processSection) {
   }, { passive: true });
 }
 
-// HERO VIDEO — 3-layer autoplay strategy
-var heroVideo = document.querySelector('.hero-video');
-var videoPlaying = false;
+// HERO CANVAS VIDEO — bypasses all autoplay restrictions
+(function() {
+  var canvas = document.querySelector('.hero-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
 
-function showVideo() {
-  if (!videoPlaying && heroVideo) {
-    videoPlaying = true;
-    heroVideo.style.opacity = '1';
+  var video = document.createElement('video');
+  video.className = 'hero-video-src';
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.setAttribute('muted', '');
+  video.setAttribute('loop', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
+  video.preload = 'auto';
+  video.src = 'hero-bg.mp4';
+  document.querySelector('.hero').appendChild(video);
+
+  var fps = 20;
+  var frameDur = 1 / fps;
+  var duration = 0;
+  var running = false;
+
+  function sizeCanvas() {
+    var hero = document.querySelector('.hero');
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
   }
-}
 
-function tryPlay() {
-  if (videoPlaying || !heroVideo) return;
-  heroVideo.muted = true;
-  heroVideo.defaultMuted = true;
-  var p = heroVideo.play();
-  if (p !== undefined) p.then(showVideo).catch(function(){});
-}
-
-if (heroVideo) {
-  heroVideo.addEventListener('error', function(){ if(heroVideo) heroVideo.style.display='none'; });
-  var src = heroVideo.querySelector('source');
-  if (src) src.addEventListener('error', function(){ if(heroVideo) heroVideo.style.display='none'; });
-
-  // Layer 1: standard autoplay
-  if (heroVideo.readyState >= 2) { tryPlay(); }
-  else { heroVideo.addEventListener('canplay', tryPlay, {once:true}); }
-
-  // Layer 2: user interaction trigger (Safari requires gesture)
-  var interactionEvents = ['touchstart','click','scroll','keydown'];
-  function onFirstInteraction() {
-    interactionEvents.forEach(function(e){ document.removeEventListener(e, onFirstInteraction, {capture:true}); });
-    if (!videoPlaying) tryPlay();
+  function drawFrame() {
+    if (!video.videoWidth) return;
+    var cw = canvas.width, ch = canvas.height;
+    var vw = video.videoWidth, vh = video.videoHeight;
+    var scale = Math.max(cw / vw, ch / vh);
+    var dw = vw * scale, dh = vh * scale;
+    ctx.drawImage(video, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
   }
-  interactionEvents.forEach(function(e){ document.addEventListener(e, onFirstInteraction, {capture:true, passive:true, once:true}); });
 
-  // Layer 3: periodic retry
-  var retryCount = 0;
-  var retryInterval = setInterval(function() {
-    retryCount++;
-    if (videoPlaying || retryCount > 20) { clearInterval(retryInterval); return; }
-    tryPlay();
-  }, 500);
-}
+  function nativePlayLoop() {
+    if (!running) return;
+    drawFrame();
+    requestAnimationFrame(nativePlayLoop);
+  }
+
+  function tryNativePlay() {
+    if (running) return;
+    video.muted = true;
+    var p = video.play();
+    if (p !== undefined) {
+      p.then(function() {
+        running = true;
+        nativePlayLoop();
+      }).catch(function() {
+        seekLoop();
+      });
+    } else {
+      seekLoop();
+    }
+  }
+
+  function seekLoop() {
+    if (running) return;
+    running = true;
+    var t = 0;
+    function tick() {
+      t += frameDur;
+      if (t >= duration) t = 0;
+      video.currentTime = t;
+    }
+    video.onseeked = function() {
+      drawFrame();
+      setTimeout(tick, frameDur * 1000);
+    };
+    tick();
+  }
+
+  video.onloadeddata = function() {
+    duration = video.duration || 5.8;
+    sizeCanvas();
+    drawFrame();
+    tryNativePlay();
+  };
+
+  // Also try on first user interaction (Safari gesture requirement)
+  var events = ['touchstart','click','scroll'];
+  function onInteract() {
+    events.forEach(function(e){ document.removeEventListener(e, onInteract, true); });
+    if (!running && video.readyState >= 2) tryNativePlay();
+  }
+  events.forEach(function(e){ document.addEventListener(e, onInteract, {capture:true, passive:true}); });
+
+  window.addEventListener('resize', function() { if (running) sizeCanvas(); }, {passive:true});
+  video.load();
+})();
 
 // POPUPS
 const popupState = { exit: false, time: false, scroll: false };
