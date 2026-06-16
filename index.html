@@ -1064,58 +1064,49 @@ if (timelineFill && processSection) {
   }, { passive: true });
 }
 
-// HERO VIDEO AUTOPLAY + FALLBACK
-const heroVideo = document.querySelector('.hero-video');
-function hideVideo() {
-  if (heroVideo) heroVideo.style.display = 'none';
+// HERO VIDEO — 3-layer autoplay strategy
+var heroVideo = document.querySelector('.hero-video');
+var videoPlaying = false;
+
+function showVideo() {
+  if (!videoPlaying && heroVideo) {
+    videoPlaying = true;
+    heroVideo.style.opacity = '1';
+  }
 }
-if (heroVideo) {
-  heroVideo.addEventListener('error', hideVideo);
-  var src = heroVideo.querySelector('source');
-  if (src) src.addEventListener('error', hideVideo);
 
+function tryPlay() {
+  if (videoPlaying || !heroVideo) return;
   heroVideo.muted = true;
-  heroVideo.setAttribute('muted', '');
   heroVideo.defaultMuted = true;
-  heroVideo.playsInline = true;
-  heroVideo.setAttribute('playsinline', '');
-  heroVideo.setAttribute('webkit-playsinline', '');
+  var p = heroVideo.play();
+  if (p !== undefined) p.then(showVideo).catch(function(){});
+}
 
-  function tryPlay() {
-    var p = heroVideo.play();
-    if (p !== undefined) {
-      p.then(function() {
-        heroVideo.style.opacity = '1';
-      }).catch(function() {
-        heroVideo.muted = true;
-        heroVideo.setAttribute('muted', '');
-        heroVideo.defaultMuted = true;
-        var p2 = heroVideo.play();
-        if (p2 !== undefined) {
-          p2.then(function() {
-            heroVideo.style.opacity = '1';
-          }).catch(hideVideo);
-        }
-      });
-    }
+if (heroVideo) {
+  heroVideo.addEventListener('error', function(){ if(heroVideo) heroVideo.style.display='none'; });
+  var src = heroVideo.querySelector('source');
+  if (src) src.addEventListener('error', function(){ if(heroVideo) heroVideo.style.display='none'; });
+
+  // Layer 1: standard autoplay
+  if (heroVideo.readyState >= 2) { tryPlay(); }
+  else { heroVideo.addEventListener('canplay', tryPlay, {once:true}); }
+
+  // Layer 2: user interaction trigger (Safari requires gesture)
+  var interactionEvents = ['touchstart','click','scroll','keydown'];
+  function onFirstInteraction() {
+    interactionEvents.forEach(function(e){ document.removeEventListener(e, onFirstInteraction, {capture:true}); });
+    if (!videoPlaying) tryPlay();
   }
+  interactionEvents.forEach(function(e){ document.addEventListener(e, onFirstInteraction, {capture:true, passive:true, once:true}); });
 
-  if (heroVideo.readyState >= 2) {
+  // Layer 3: periodic retry
+  var retryCount = 0;
+  var retryInterval = setInterval(function() {
+    retryCount++;
+    if (videoPlaying || retryCount > 20) { clearInterval(retryInterval); return; }
     tryPlay();
-  } else {
-    heroVideo.addEventListener('loadeddata', tryPlay, { once: true });
-    heroVideo.addEventListener('canplay', tryPlay, { once: true });
-  }
-
-  setTimeout(function() {
-    if (heroVideo.paused) tryPlay();
   }, 500);
-  setTimeout(function() {
-    if (heroVideo.paused) tryPlay();
-  }, 1500);
-  setTimeout(function() {
-    if (heroVideo.paused) tryPlay();
-  }, 3000);
 }
 
 // POPUPS
