@@ -368,10 +368,16 @@ ul{list-style:none}
   body{font-size:15px}
   .nav-links,.nav-cta.desktop{display:none}
   .hamburger{display:block}
+  .nav-logo-img{height:32px}
+  .hero-video{display:none}
+  .hero-poster{display:block!important}
+  .hero-logo{max-width:300px}
   .about-grid{grid-template-columns:1fr;gap:40px}
   .about-img{order:-1}
+  .about-img img{max-height:400px;object-fit:cover;width:100%}
   .artists-grid{grid-template-columns:1fr 1fr}
   .gallery-grid{grid-template-columns:1fr}
+  .gallery-item img{max-height:350px;object-fit:cover}
   .prep-grid{grid-template-columns:1fr}
   .why-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
@@ -380,6 +386,14 @@ ul{list-style:none}
   .hero-ctas .btn{width:100%;max-width:300px;white-space:normal}
   .newsletter-form{flex-direction:column}
   .location-map{aspect-ratio:4/3}
+  .about-bg{background-image:url('https://images.pexels.com/photos/7878273/pexels-photo-7878273.jpeg?auto=compress&cs=tinysrgb&w=800')}
+  .artists-bg{background-image:url('https://images.pexels.com/photos/955938/pexels-photo-955938.jpeg?auto=compress&cs=tinysrgb&w=800')}
+  .styles-bg{background-image:url('https://images.pexels.com/photos/1461519/pexels-photo-1461519.jpeg?auto=compress&cs=tinysrgb&w=800')}
+  .pricing-bg{background-image:url('https://images.pexels.com/photos/6593377/pexels-photo-6593377.jpeg?auto=compress&cs=tinysrgb&w=800')}
+  .why-bg{background-image:url('https://images.pexels.com/photos/7005753/pexels-photo-7005753.jpeg?auto=compress&cs=tinysrgb&w=800')}
+  .process-bg{background-image:url('https://images.pexels.com/photos/4123892/pexels-photo-4123892.jpeg?auto=compress&cs=tinysrgb&w=800')}
+  .faq-bg{background-image:url('https://images.pexels.com/photos/4125711/pexels-photo-4125711.jpeg?auto=compress&cs=tinysrgb&w=800')}
+  .cta-banner-bg{background-image:url('https://images.pexels.com/photos/4125580/pexels-photo-4125580.jpeg?auto=compress&cs=tinysrgb&w=800')}
 }
 @media(max-width:480px){
   .artists-grid{grid-template-columns:1fr}
@@ -450,7 +464,7 @@ ul{list-style:none}
   <div class="container">
     <div class="about-grid">
       <div class="about-img reveal">
-        <img src="https://images.pexels.com/photos/13345926/pexels-photo-13345926.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Tattoo artist creating detailed work" width="800" height="1200" loading="lazy">
+        <img src="https://images.pexels.com/photos/13345926/pexels-photo-13345926.jpeg?auto=compress&cs=tinysrgb&w=800" srcset="https://images.pexels.com/photos/13345926/pexels-photo-13345926.jpeg?auto=compress&cs=tinysrgb&w=400 400w, https://images.pexels.com/photos/13345926/pexels-photo-13345926.jpeg?auto=compress&cs=tinysrgb&w=800 800w" sizes="(max-width:768px) 100vw, 50vw" alt="Tattoo artist creating detailed work" width="800" height="1200" loading="lazy">
       </div>
       <div class="about-text reveal">
         <span class="section-label">Our Story</span>
@@ -520,12 +534,12 @@ ul{list-style:none}
       <p>Every piece tells a story. Browse a selection of custom work from our studio.</p>
     </div>
     <div class="gallery-grid reveal">
-      <div class="gallery-item"><img src="https://images.pexels.com/photos/428105/pexels-photo-428105.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Tattoo artist inking an arm piece" width="800" height="1200" loading="lazy"></div>
-      <div class="gallery-item"><img src="https://images.pexels.com/photos/12038947/pexels-photo-12038947.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Close-up of detailed arm tattoo" width="800" height="533" loading="lazy"></div>
-      <div class="gallery-item"><img src="https://images.pexels.com/photos/5088459/pexels-photo-5088459.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Finished tattoo on arm" width="800" height="1200" loading="lazy"></div>
-      <div class="gallery-item"><img src="https://images.pexels.com/photos/7005723/pexels-photo-7005723.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Overhead view of tattoo session" width="800" height="1200" loading="lazy"></div>
-      <div class="gallery-item"><img src="https://images.pexels.com/photos/10141587/pexels-photo-10141587.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Arm with detailed tattoo work" width="800" height="533" loading="lazy"></div>
-      <div class="gallery-item"><img src="https://images.pexels.com/photos/7005670/pexels-photo-7005670.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Tattoo machine on client's shoulder" width="800" height="1200" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.pexels.com/photos/428105/pexels-photo-428105.jpeg?auto=compress&cs=tinysrgb&w=800" srcset="https://images.pexels.com/photos/428105/pexels-photo-428105.jpeg?auto=compress&cs=tinysrgb&w=400 400w, https://images.pexels.com/photos/428105/pexels-photo-428105.jpeg?auto=compress&cs=tinysrgb&w=800 800w" sizes="(max-width:768px) 100vw, 33vw" alt="Tattoo artist inking an arm piece" width="800" height="1200" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.pexels.com/photos/12038947/pexels-photo-12038947.jpeg?auto=compress&cs=tinysrgb&w=800" srcset="https://images.pexels.com/photos/12038947/pexels-photo-12038947.jpeg?auto=compress&cs=tinysrgb&w=400 400w, https://images.pexels.com/photos/12038947/pexels-photo-12038947.jpeg?auto=compress&cs=tinysrgb&w=800 800w" sizes="(max-width:768px) 100vw, 33vw" alt="Close-up of detailed arm tattoo" width="800" height="533" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.pexels.com/photos/5088459/pexels-photo-5088459.jpeg?auto=compress&cs=tinysrgb&w=800" srcset="https://images.pexels.com/photos/5088459/pexels-photo-5088459.jpeg?auto=compress&cs=tinysrgb&w=400 400w, https://images.pexels.com/photos/5088459/pexels-photo-5088459.jpeg?auto=compress&cs=tinysrgb&w=800 800w" sizes="(max-width:768px) 100vw, 33vw" alt="Finished tattoo on arm" width="800" height="1200" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.pexels.com/photos/7005723/pexels-photo-7005723.jpeg?auto=compress&cs=tinysrgb&w=800" srcset="https://images.pexels.com/photos/7005723/pexels-photo-7005723.jpeg?auto=compress&cs=tinysrgb&w=400 400w, https://images.pexels.com/photos/7005723/pexels-photo-7005723.jpeg?auto=compress&cs=tinysrgb&w=800 800w" sizes="(max-width:768px) 100vw, 33vw" alt="Overhead view of tattoo session" width="800" height="1200" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.pexels.com/photos/10141587/pexels-photo-10141587.jpeg?auto=compress&cs=tinysrgb&w=800" srcset="https://images.pexels.com/photos/10141587/pexels-photo-10141587.jpeg?auto=compress&cs=tinysrgb&w=400 400w, https://images.pexels.com/photos/10141587/pexels-photo-10141587.jpeg?auto=compress&cs=tinysrgb&w=800 800w" sizes="(max-width:768px) 100vw, 33vw" alt="Arm with detailed tattoo work" width="800" height="533" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.pexels.com/photos/7005670/pexels-photo-7005670.jpeg?auto=compress&cs=tinysrgb&w=800" srcset="https://images.pexels.com/photos/7005670/pexels-photo-7005670.jpeg?auto=compress&cs=tinysrgb&w=400 400w, https://images.pexels.com/photos/7005670/pexels-photo-7005670.jpeg?auto=compress&cs=tinysrgb&w=800 800w" sizes="(max-width:768px) 100vw, 33vw" alt="Tattoo machine on client's shoulder" width="800" height="1200" loading="lazy"></div>
     </div>
   </div>
 </section>
