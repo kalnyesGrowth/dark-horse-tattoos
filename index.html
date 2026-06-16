@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dark Horse Tattoos | Custom Tattoo Studio in Stafford, VA</title>
-<meta name="description" content="Dark Horse Tattoos — Stafford's Best Tattoo Parlor 2022 & 2023. Custom tattoos by 5 award-winning artists with 50+ years combined experience. Private rooms. Appointment only. (540) 288-8370.">
+<meta name="description" content="Dark Horse Tattoos. Stafford's Best Tattoo Parlor 2022 & 2023. Custom tattoos by 5 award-winning artists with 50+ years combined experience. Private rooms. Appointment only. (540) 288-8370.">
 <meta name="theme-color" content="#0A0A0A">
 <link rel="canonical" href="https://kalnyesgrowth.github.io/dark-horse-tattoos/">
 
@@ -172,7 +172,10 @@ ul{list-style:none}
 .stat .label{font-size:var(--text-xs);color:var(--cream-dim);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:4px;display:block}
 
 /* ARTISTS */
-.artists{padding:120px 0;background:var(--surface)}
+.artists{padding:120px 0;position:relative}
+.artists-bg{position:absolute;inset:0;background:url('https://images.pexels.com/photos/955938/pexels-photo-955938.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;z-index:0}
+.artists-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,21,21,.92) 0%,rgba(21,21,21,.94) 100%)}
+.artists .container{position:relative;z-index:1}
 .artists-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
 .artist-card{background:rgba(232,224,212,.03);border:1px solid rgba(232,224,212,.06);border-radius:var(--radius);padding:40px 20px;text-align:center;transition:all var(--transition)}
 .artist-card:hover{border-color:var(--crimson);transform:translateY(-4px)}
@@ -192,7 +195,10 @@ ul{list-style:none}
 .gallery-item:hover img{transform:scale(1.08)}
 
 /* STYLES */
-.styles{padding:120px 0;background:var(--surface)}
+.styles{padding:120px 0;position:relative}
+.styles-bg{position:absolute;inset:0;background:url('https://images.pexels.com/photos/1461519/pexels-photo-1461519.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;z-index:0}
+.styles-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,21,21,.93) 0%,rgba(21,21,21,.95) 100%)}
+.styles .container{position:relative;z-index:1}
 .styles-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:900px;margin:0 auto}
 .style-pill{padding:10px 24px;border:1px solid rgba(232,224,212,.12);border-radius:50px;font-size:var(--text-sm);color:var(--cream-dim);font-weight:500;transition:all var(--transition);cursor:default}
 .style-pill:hover{border-color:var(--crimson);color:var(--crimson);background:var(--crimson-dim)}
@@ -214,7 +220,10 @@ ul{list-style:none}
 .payment-methods strong{color:var(--cream)}
 
 /* WHY */
-.why{padding:120px 0;background:var(--surface)}
+.why{padding:120px 0;position:relative}
+.why-bg{position:absolute;inset:0;background:url('https://images.pexels.com/photos/7005753/pexels-photo-7005753.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;z-index:0}
+.why-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,21,21,.92) 0%,rgba(21,21,21,.94) 100%)}
+.why .container{position:relative;z-index:1}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 .why-card{background:rgba(232,224,212,.03);border:1px solid rgba(232,224,212,.06);border-radius:var(--radius);padding:40px 24px;text-align:center;transition:all var(--transition)}
 .why-card:hover{border-color:var(--crimson);transform:translateY(-4px)}
@@ -240,7 +249,10 @@ ul{list-style:none}
 .reviews-google .incentive{font-size:var(--text-sm);color:var(--cream-dim);margin-top:12px}
 
 /* PROCESS */
-.process{padding:120px 0;background:var(--surface)}
+.process{padding:120px 0;position:relative}
+.process-bg{position:absolute;inset:0;background:url('https://images.pexels.com/photos/4123892/pexels-photo-4123892.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;z-index:0}
+.process-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,21,21,.93) 0%,rgba(21,21,21,.95) 100%)}
+.process .container{position:relative;z-index:1}
 .timeline{position:relative;max-width:700px;margin:0 auto;padding-left:60px}
 .timeline-line{position:absolute;left:20px;top:0;bottom:0;width:2px;background:rgba(232,224,212,.08)}
 .timeline-line-fill{position:absolute;left:20px;top:0;width:2px;height:0;background:var(--crimson);transition:height .1s linear}
@@ -264,7 +276,10 @@ ul{list-style:none}
 .prep-dont .prep-item svg{stroke:var(--crimson)}
 
 /* FAQ */
-.faq{padding:120px 0;background:var(--surface);position:relative}
+.faq{padding:120px 0;position:relative}
+.faq-bg{position:absolute;inset:0;background:url('https://images.pexels.com/photos/4125711/pexels-photo-4125711.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;z-index:0}
+.faq-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,21,21,.93) 0%,rgba(21,21,21,.95) 100%)}
+.faq .container{position:relative;z-index:1}
 .faq-list{max-width:800px;margin:0 auto}
 .faq-item{border-bottom:1px solid rgba(232,224,212,.06)}
 .faq-question{width:100%;background:none;border:none;padding:24px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--cream);font-family:var(--font-body);font-size:var(--text-lg);font-weight:500;text-align:left;transition:color var(--transition)}
@@ -455,6 +470,7 @@ ul{list-style:none}
 
 <!-- ARTISTS -->
 <section class="artists" id="artists">
+  <div class="artists-bg"></div>
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">The Team</span>
@@ -517,6 +533,7 @@ ul{list-style:none}
 
 <!-- STYLES -->
 <section class="styles" id="styles">
+  <div class="styles-bg"></div>
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">Capabilities</span>
@@ -578,6 +595,7 @@ ul{list-style:none}
 
 <!-- WHY CHOOSE US -->
 <section class="why" id="why">
+  <div class="why-bg"></div>
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">Why Dark Horse</span>
@@ -677,6 +695,7 @@ ul{list-style:none}
 
 <!-- PROCESS -->
 <section class="process">
+  <div class="process-bg"></div>
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">How It Works</span>
@@ -751,6 +770,7 @@ ul{list-style:none}
 
 <!-- FAQ -->
 <section class="faq" id="faq">
+  <div class="faq-bg"></div>
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">Questions</span>
